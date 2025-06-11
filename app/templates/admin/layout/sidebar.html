@@ -1,0 +1,77 @@
+
+
+<nav class="sb-topnav navbar navbar-expand navbar-light bg-clr">
+    <a class="navbar-brand logo-brand" href="index.php"><span style="color:#00bc00">Welcome</span> admin</a>
+    <button class="btn btn-link btn-sm order-1 order-lg-0" id="sidebarToggle" href="#"><i onclick="myFunction()" class="fas fa-bars"></i></button>
+    <!--<a href="index.php" class="frnt-link"><i class="fas fa-external-link-alt"></i>Home</a>-->
+    <ul class="navbar-nav ml-auto mr-md-0">
+    <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" id="userDropdown" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user fa-fw"></i></a>
+    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
+    <!-- <a class="dropdown-item admin-dropdown-item" href="edit_profile.php">Edit Profile</a> -->
+    
+    <a class="dropdown-item admin-dropdown-item" href="ch_pwd.php">Change Password</a>
+    
+      <a class="dropdown-item admin-dropdown-item" href="logout.php">Logout</a>
+    </div>
+    </li>
+    </ul>
+    </nav>
+    
+    <script>
+    function myFunction() {
+    var body = document.getElementById("body");
+    if (body.className == "sb-nav-fixed") {
+    body.classList.add("sb-nav-fixed");
+    body.classList.add("sb-sidenav-toggled");
+    } else {    
+    body.classList.remove("sb-nav-fixed");
+    body.classList.remove("sb-sidenav-toggled");
+    body.classList.add("sb-nav-fixed");
+    }
+    }
+    </script>
+    
+<div id="layoutSidenav">
+
+<div id="layoutSidenav_nav">
+    <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+    <div class="sb-sidenav-menu">
+    <div class="nav">
+    <a class="nav-link active" href="{{ url_for(admin_url + '.dashboard')}}">
+    <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+    Dashboard 
+    </a>
+    
+
+
+    
+    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayousssdsdfgdtdssdfs" aria-expanded="false" aria-controls="collapseLayouts">
+    <div class="sb-nav-link-icon"><i class="fas fa-newspaper"></i></div>
+    Categories  1
+    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+    </a>
+    <div class="collapse" id="collapseLayousssdsdfgdtdssdfs" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
+    <nav class="sb-sidenav-menu-nested nav">
+      <a class="nav-link sub_nav_link" href="{{ url_for(admin_url + '.addFaq')}}">Add FAQs</a>
+      <a class="nav-link sub_nav_link" href="{{ url_for(admin_url + '.faq')}}">View FAQs</a>        
+    </nav>
+    </div>
+
+
+    
+    <a class="nav-link" href="">
+    <div class="sb-nav-link-icon"><i class="fa fa-question"></i></div>
+    Contact us
+    </a>
+
+    <a class="nav-link" href="">
+      <div class="sb-nav-link-icon"><i class="fa fa-unlock"></i></div>
+      Sign Out
+      </a>
+  
+    </div>
+    </div>
+    </nav>
+</div>
+

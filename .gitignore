@@ -1,0 +1,39 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+**/__pycache__/
+__pycache__/
+*.py[cod]
+
+
+# Frontend cache (e.g., Node.js, NPM, Yarn)
+# node_modules/
+# *.cache
+
+# Cache files in general
+*.cache
+*.log
+
+# Ignore all directories named 'cache'
+cache/
+.cache/
+
+# # dependencies
+# /front/node_modules
+# /front/.pnp
+# /front/.pnp.js
+
+# # testing
+# /front/coverage
+
+# # production
+# #/front/build
+
+# # misc
+# /front/.DS_Store
+# /front/.env.local
+# /front/.env.development.local
+# /front/.env.test.local
+# /front/.env.production.local
+
+# /front/npm-debug.log*
+# /front/yarn-debug.log*
+# /front/yarn-error.log*

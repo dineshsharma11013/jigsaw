@@ -1,0 +1,49 @@
+{% extends 'admin/layout/layout.html' %}
+
+{% block content %}
+
+    <div class="container-fluid">
+<!--<h2 class="mt-30 page-title">All Bidders</h2>-->
+<ol class="breadcrumb mb-30" style="width: 100%;">
+    <li class="breadcrumb-item active" style="font-size: 18px; font-weight: bold; color: black !important; text-align: right;">View FAQ</li>
+  </ol>
+  
+    <div style="float:right">
+        <a href="{{ url_for(admin_url + '.addFaq') }}" class="btn btn-primary">Add FAQ</a>
+    </div>
+
+<div class='col-md-12 table table-responsive' style="border: none !important;background:white;padding-top: 40px;">
+    <table class='table' id='myTable' style="border: 2px solid black !important;">
+    <thead>   
+<tr>    
+
+<th style="border-bottom:2px solid black !important;">S.No</th>
+<th style="border-bottom:2px solid black !important;">Name</th>
+<th style="border-bottom:2px solid black !important;">Status</th>
+<th style="border-bottom:2px solid black !important;">Action</th>
+
+
+</tr>   
+</thead>
+   <tbody>     
+      {% for cat in results %}
+        <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ cat.title }}</td>
+            <td>{{ cat.status|status_filter }}</td>
+            <td>
+                <a href="{{ url_for(admin_url + '.updateFaq', id=cat.id) }}" class="btn btn-primary btn-sm">Edit</a>
+            <a href="javascript:void(0)" onclick="deleteData('{{ url_for(admin_url + '.updateFaq', id=cat.id) }}', 'deleteBtn', 'DELETE')" id="deleteBtn" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>            
+        
+    </table>
+    </div>
+
+
+</div>
+
+
+{% endblock %}  

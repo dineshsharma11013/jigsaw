@@ -1,0 +1,64 @@
+my folder structure is
+
+jigsaw/
+├── run.py
+└── app/
+    ├── __init__.py
+    ├── controller/
+    │   ├── __init__.py
+    │   └── api/
+    │       └── admin_controller.py
+    ├── admin/
+    │   ├── __init__.py
+    │   └── dashboard.py
+    ├── models/
+    ├── static/
+    │   └── admin/
+    │       └── css/
+    └── templates/
+        └── admin/
+            └── dashboard.html
+
+
+
+
+
+https://www.youtube.com/watch?v=ZCRqwez93R0&list=PLqIb7mt_Xhs4XUSBbxZWGqAYsXWcJ8n2N&index=2 --- techfryday
+
+https://www.youtube.com/watch?v=HZ0lnQER3G4&list=PLjC8JXsSUrri-6NaaN9UUi0_FZB_YrTsL&index=3 ---- for jwt -- tech-gram academy
+https://github.com/TechGram-Academy/REST-APIs-with-Authentication/blob/master/app.py   
+
+links
+ 1. https://www.opentechguides.com/how-to/article/python/210/flask-mysql-crud.html#google_vignette
+ 2. https://webdamn.com/category/tutorials-2/python/page/4/ ------ imp.
+
+note:- we set env flask_env so that we could run this continuously if we do not use it then we have start it again and again
+
+1. $env:FLASK_ENV="development"     ----- setting flask env variable (set this in powershell)
+2. set FLASK_ENV=development ----- in cmd    
+3. set PYTHONDONTWRITEBYCODE = 1  ------- it will not create pycache files 
+
+error for docker
+
+1. https://www.youtube.com/watch?v=Vj35f6L9TCA
+
+1. pip install flask
+2. pip install mysql-connector-python
+3. pip install python-dotenv (for env)
+4. pip install Flask-Mail
+
+
+note -
+1. from app.filters.filters import register_filters in __init__.py
+    app.config['TEMPLATES_AUTO_RELOAD'] = True
+    app.jinja_env.auto_reload = True
+    app.jinja_env.cache = {}     we are defining all these three lines so that instant changes could work properly
+    register_filters(app)
+
+
+2. from app.context_processors import inject_admin_config
+app.context_processor(inject_admin_config)
+    
+
+
+

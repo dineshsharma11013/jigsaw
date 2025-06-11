@@ -1,0 +1,64 @@
+{% extends 'admin/layout/layout.html' %}
+
+{% block content %}
+
+
+<div class="container-fluid">
+
+    <ol class="breadcrumb mb-30 mt-2">
+    <li class="breadcrumb-item active" style="font-size: 18px;font-weight: bold;color: black !important;">Add Faq</li>
+    </ol>
+    <div class="container-fluid">
+    
+    
+    <form id="pageForm">
+        
+    <div class="row">
+    <div class="form-group col-md-12 col-xs-12 ">
+    <label class="form-label" style="font-size:16px !important;">Title <span style="color:red;">*</span></label>
+    <input type='text' name="title" id="title" onKeyUp="Removef('title')" placeholder="Enter title" class="form-control"  style="border: 2px solid grey!important;">
+    <div class="error_cls" id="error_title"></div>
+    </div>
+
+
+    <div class="form-group col-md-12 col-xs-12">
+        <label class="form-label" style="font-size:16px !important;">Description</label>
+        <textarea name="descptn" class="form-control"  style="border: 2px solid grey!important;"> 
+        </textarea>
+        </div>
+    
+        <div class="form-group col-md-6 col-xs-6">
+            <label class="form-label" style="font-size:16px !important;">Status <span style="color:red;">*</span></label>
+            <select name="status" id="status" onchange="Removef('status')" class="form-control"  style="border: 2px solid grey!important;"> 
+                <option value="">Select Status</option>
+                <option value="1">Active</option>
+                <option value="2">De-active</option>
+            </select>
+            <div class="error_cls" id="error_status"></div>
+            </div>    
+        
+                
+
+    <div class="form-group col-md-12">
+    <button type="button" onclick="dataEditorSave('pageForm', 'btn', '{{ url_for(admin_url + '.addFaq')}}', PageValidate)" id="btn" class="btn btn-primary btn-sm">Submit</button>
+  
+    </div>
+    </div>
+    </form>
+    
+    
+    
+    
+    </div>
+    </div>
+
+{% block javascript %}
+
+<script src="{{ url_for('serve_admin_static', filename='ckeditor/ckeditor.js') }}"></script> 
+<script src="{{ url_for('serve_admin_static', filename='js/newJs/validation.js') }}"></script> 
+<script>
+    CKEDITOR.replace( 'descptn' );
+</script>
+
+{% endblock %}
+{% endblock %} 
