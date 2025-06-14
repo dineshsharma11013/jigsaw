@@ -2,6 +2,7 @@ my folder structure is
 
 jigsaw/
 ├── run.py
+└── front/build
 └── app/
     ├── __init__.py
     ├── controller/

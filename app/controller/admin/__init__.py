@@ -11,4 +11,4 @@ admin_bp = Blueprint(
 )
 
 from . import dashboard
-from . import faq
+from . import faq   

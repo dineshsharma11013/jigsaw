@@ -55,8 +55,8 @@
 
 {% block javascript %}
 
-<script src="{{ url_for('serve_admin_static', filename='ckeditor/ckeditor.js') }}"></script> 
-<script src="{{ url_for('serve_admin_static', filename='js/newJs/validation.js') }}"></script> 
+<script src="{{ url_for('admin.static', filename='ckeditor/ckeditor.js') }}"></script> 
+<script src="{{ url_for('admin.static', filename='js/newJs/validation.js') }}"></script> 
 <script>
     CKEDITOR.replace( 'descptn' );
 </script>

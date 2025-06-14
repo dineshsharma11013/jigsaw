@@ -40,28 +40,19 @@
     <div class="nav">
     <a class="nav-link active" href="{{ url_for(admin_url + '.dashboard')}}">
     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-    Dashboard 
+    Dashboard   
     </a>
     
 
 
-    
-    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseLayousssdsdfgdtdssdfs" aria-expanded="false" aria-controls="collapseLayouts">
-    <div class="sb-nav-link-icon"><i class="fas fa-newspaper"></i></div>
-    Categories  1
-    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+       <a class="nav-link" href="{{ url_for(admin_url + '.faq')}}">
+    <div class="sb-nav-link-icon"><i class="far fa-circle"></i></div>
+    Faqs
     </a>
-    <div class="collapse" id="collapseLayousssdsdfgdtdssdfs" aria-labelledby="headingOne" data-parent="#sidenavAccordion">
-    <nav class="sb-sidenav-menu-nested nav">
-      <a class="nav-link sub_nav_link" href="{{ url_for(admin_url + '.addFaq')}}">Add FAQs</a>
-      <a class="nav-link sub_nav_link" href="{{ url_for(admin_url + '.faq')}}">View FAQs</a>        
-    </nav>
-    </div>
-
 
     
     <a class="nav-link" href="">
-    <div class="sb-nav-link-icon"><i class="fa fa-question"></i></div>
+    <div class="sb-nav-link-icon"><i class="far fa-circle"></i></div>
     Contact us
     </a>
 
