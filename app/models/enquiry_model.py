@@ -1,49 +1,41 @@
-from app.models import cur, con
+from app.extensions import db
 from datetime import datetime
-from flask import jsonify, current_app
-import os
-from app.helper import Helper
-from datetime import datetime
-from app.mail import send_email
+import enum
 
-hl = Helper()
+class StatusEnum(enum.IntEnum):
+    ACTIVE = "1"
+    INACTIVE = "2"
 
-class EnquiryMdl():
-    def __init__(self):
-        try:
-            #mysql.connector.connect(host="localhost", user="root", password="", database="flask_tutorial2")
-            current_time = datetime.now()
-            self.formatted_time = current_time.strftime('%Y-%m-%d %H:%M:%S')
-            print("connected successfully")
-        except Exception as e:
-            print("error - ",e)
-            
-            
-    def get_enquiry(self):
-        try:
-            #cur.execute(f"select * from enquiry_mdl")
-            #cur.fetchall()
-            data = hl.getAllData('enquiry_mdl') 
-            print(data)
-            if len(data) > 0:
-                return jsonify({'payload':data}), 200
-            else:
-                return jsonify({'msg':'There is no data.'}), 204
-        except Exception as e:
-            print("error - ",e)
-            return jsonify({'error': 'Failed to fetch data'}), 500            
-        
-        
-    def save_enquiry(self, data, rem_addr):
-        try:
-            query = "INSERT INTO enquiry_mdl (name, email, phone, subject, message, rem_addr, created_at) VALUES (%s, %s, %s, %s, %s, %s, %s)"
-            cur.execute(query, (data['name'], data['email'], data['phone'], data['subject'], data['message'], rem_addr, datetime.now()))
-            send_email("test", "dinesh.sharma11013@gmail.com", "hello world")
-            return jsonify({'msg': 'Message sent successfully'}), 201         
-        except Exception as e:
-            print("Error:", e)
-            return jsonify({'error': 'Failed to save data'}), 500         
-        
-        
-        
-        
+class EnquiryMdl(db.Model):
+    __tablename__ = "enquiry_mdl"
+    
+    #  __seachbale__ = ['name','description']
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(255), nullable=False)
+    email = db.Column(db.String(100), nullable=False)
+    contact = db.Column(db.String(20), nullable=False)
+    desc = db.Column(db.Text(), nullable=True)
+    rem_addr = db.Column(db.String(50), nullable=True)
+    status = db.Column(
+        db.Integer, 
+        nullable=False, 
+        default=StatusEnum.ACTIVE, 
+        comment="1: Active, 2: Inactive"
+    ) 
+    created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    updated = db.Column(db.DateTime, nullable=True)
+
+    def __repr__(self):
+        return f'<EnquiryMdl {self.id}>'
+
+
+    def to_dict(self):
+        return {
+            "id":self.id,
+            "name":self.name,
+            "email":self.email
+        }
+
+
+

@@ -8,7 +8,10 @@ from app.filters.filters import register_filters
 from app.controller.api import api_bp
 from app.controller.admin import admin_bp
 from app.extensions import db, migrate, mail
+from flask_migrate import Migrate
 from app.context_processors import inject_admin_config
+
+
 
 # Create Flask app and disable default static route
 app = Flask(__name__, static_folder=None)
@@ -24,13 +27,25 @@ app.config.update({
     'SQLALCHEMY_TRACK_MODIFICATIONS': False,
     'SEND_FILE_MAX_AGE_DEFAULT': 0,
     'DEBUG': True,
+
     'MAIL_SERVER': 'smtp.gmail.com',
     'MAIL_PORT': 587,
     'MAIL_USE_TLS': True,
     'MAIL_USERNAME': os.getenv('MAIL_USERNAME'),
     'MAIL_PASSWORD': os.getenv('MAIL_PASSWORD'),
+    'SEND_FILE_MAX_AGE_DEFAULT' : 0,
+
+    # Celery configs go here directly
+    'broker_url': "redis://localhost:6379/0",
+    'result_backend': "redis://localhost:6379/0",
+
     'admin': 'admin'
 })
+
+from app.celery import celery_service
+
+# from app.celery import init_celery
+# celery_service = init_celery(app)
 
 # Jinja reload support
 app.jinja_env.auto_reload = True
@@ -42,6 +57,7 @@ register_filters(app)
 # Initialize extensions
 db.init_app(app)
 migrate.init_app(app, db)
+Migrate(app, db)
 mail.init_app(app)
 
 # Check DB connection

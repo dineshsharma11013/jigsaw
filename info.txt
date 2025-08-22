@@ -61,5 +61,19 @@ note -
 app.context_processor(inject_admin_config)
     
 
+https://www.youtube.com/watch?v=ZDe9kQLeKwM  --- SQLAlchemy & Flask-Migrate Setup in Flask with SQLite | Guide 🚀
 
+
+1. pip install Flask-Migrate
+2. flask db init
+3. flask db migrate
+4. flask db upgrade
+
+
+redis
+
+1. celery -A app.celery.celery_service worker --loglevel=info --pool=solo   ----- run this command for celery
+   
+2. flushall --- Clear all databases of redis: --- in C:\redis ---> run in cmd
+3. flushdb ----- Clear only current DB of redis (default 0): === in C:\redis ----> run in cmd
 
