@@ -1,8 +1,6 @@
 from flask import Flask, send_from_directory
 import os
-
 from dotenv import load_dotenv
-load_dotenv()
 
 from app.filters.filters import register_filters
 from app.controller.api import api_bp
@@ -10,81 +8,83 @@ from app.controller.admin import admin_bp
 from app.extensions import db, migrate, mail
 from flask_migrate import Migrate
 from app.context_processors import inject_admin_config
+from app.celery import celery, init_celery
+import redis
 
+load_dotenv()
 
-
-# Create Flask app and disable default static route
+# Create Flask app
 app = Flask(__name__, static_folder=None)
 
-# Load environment and app config
+# Load config
 basedir = os.path.abspath(os.path.dirname(__file__))
 root_dir = os.path.abspath(os.path.join(basedir, '..'))
 
-app.config.update({
-    'TEMPLATES_AUTO_RELOAD': True,
-    'SECRET_KEY': os.getenv('SECRET_KEY'),
-    'SQLALCHEMY_DATABASE_URI': os.getenv('SQLALCHEMY_DATABASE_URI'),
-    'SQLALCHEMY_TRACK_MODIFICATIONS': False,
-    'SEND_FILE_MAX_AGE_DEFAULT': 0,
-    'DEBUG': True,
+app.config.from_mapping(
+    SECRET_KEY=os.getenv("SECRET_KEY"),
+    #SQLALCHEMY_DATABASE_URI=os.getenv("SQLALCHEMY_DATABASE_URI"),
+    SQLALCHEMY_DATABASE_URI=os.getenv("SQLALCHEMY_DATABASE_URI"),
+    SQLALCHEMY_TRACK_MODIFICATIONS=False,
+    DEBUG=True,
 
-    'MAIL_SERVER': 'smtp.gmail.com',
-    'MAIL_PORT': 587,
-    'MAIL_USE_TLS': True,
-    'MAIL_USERNAME': os.getenv('MAIL_USERNAME'),
-    'MAIL_PASSWORD': os.getenv('MAIL_PASSWORD'),
-    'SEND_FILE_MAX_AGE_DEFAULT' : 0,
+    MAIL_SERVER="smtp.gmail.com",
+    MAIL_PORT=587,
+    MAIL_USE_TLS=True,
+    MAIL_USERNAME=os.getenv("MAIL_USERNAME"),
+    MAIL_PASSWORD=os.getenv("MAIL_PASSWORD"),
 
-    # Celery configs go here directly
-    'broker_url': "redis://localhost:6379/0",
-    'result_backend': "redis://localhost:6379/0",
+    CELERY=dict(
+    broker_url=os.getenv("CELERY_BROKER_URL"),
+    result_backend=os.getenv("CELERY_RESULT_BACKEND"),
+    task_ignore_result=True,
+),
 
-    'admin': 'admin'
-})
+    admin="admin"
+)
 
-from app.celery import celery_service
+# Initialize Celery
+init_celery(app)
 
-# from app.celery import init_celery
-# celery_service = init_celery(app)
+# Check Redis
+def check_redis_connection():
+    try:
+        r = redis.Redis.from_url(app.config["CELERY"]["broker_url"])
+        r.ping()
+        print("✅ Redis is connected!")
+    except Exception as e:
+        print(f"❌ Redis connection failed: {e}")
 
-# Jinja reload support
-app.jinja_env.auto_reload = True
-app.jinja_env.cache = {}
+check_redis_connection()
 
-# Register custom Jinja filters
-register_filters(app)
-
-# Initialize extensions
+# Init extensions
 db.init_app(app)
 migrate.init_app(app, db)
 Migrate(app, db)
 mail.init_app(app)
 
-# Check DB connection
 with app.app_context():
     from sqlalchemy.sql import text
     try:
-        db.session.execute(text('SELECT 1'))
+        db.session.execute(text("SELECT 1"))
         print("✅ Database is connected!")
     except Exception as e:
         print(f"❌ Database connection failed: {e}")
     db.create_all()
 
-# Register context processor
+# Jinja filters
+register_filters(app)
 app.context_processor(inject_admin_config)
 
-# Register Blueprints
+# Blueprints
 app.register_blueprint(admin_bp)
 app.register_blueprint(api_bp)
 
-# Directory paths
-REACT_BUILD = os.path.join(root_dir, 'front', 'build')
-REACT_STATIC = os.path.join(REACT_BUILD, 'static')
-REACT_ASSETS = os.path.join(REACT_BUILD, 'assets')
-ADMIN_STATIC = os.path.join(root_dir, 'app', 'static', 'admin')
+# React static
+REACT_BUILD = os.path.join(root_dir, "front", "build")
+REACT_STATIC = os.path.join(REACT_BUILD, "static")
+REACT_ASSETS = os.path.join(REACT_BUILD, "assets")
+ADMIN_STATIC = os.path.join(root_dir, "app", "static", "admin")
 
-
-# Serve React static files
 @app.route("/static/react/<path:path>")
 def serve_react_static(path):
     return send_from_directory(REACT_STATIC, path)
@@ -93,12 +93,10 @@ def serve_react_static(path):
 def serve_react_assets(path):
     return send_from_directory(REACT_ASSETS, path)
 
-# Serve Flask admin static files
 @app.route("/static/admin/<path:filename>")
 def serve_admin_static(filename):
     return send_from_directory(ADMIN_STATIC, filename)
 
-# Serve React SPA (index.html fallback)
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def serve_react_app(path):

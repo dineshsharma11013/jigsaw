@@ -5,10 +5,11 @@ jigsaw/
 └── front/build
 └── app/
     ├── __init__.py
+    ├── celery.py
     ├── controller/
     │   ├── __init__.py
     │   └── api/
-    │       └── admin_controller.py
+    │       └──__init__.py, admin_controller.py, enquiryController.py
     ├── admin/
     │   ├── __init__.py
     │   └── dashboard.py
@@ -16,10 +17,12 @@ jigsaw/
     ├── static/
     │   └── admin/
     │       └── css/
+    ├── tasks.py
+    │   
     └── templates/
         └── admin/
             └── dashboard.html
-
+    
 
 
 
@@ -72,7 +75,9 @@ https://www.youtube.com/watch?v=ZDe9kQLeKwM  --- SQLAlchemy & Flask-Migrate Setu
 
 redis
 
-1. celery -A app.celery.celery_service worker --loglevel=info --pool=solo   ----- run this command for celery
+1. celery -A app.celery_service worker --loglevel=info --pool=solo   ----- run this command for celery
+celery -A app.celery_service worker --loglevel=info -P solo
+celery -A app.celery_service worker --loglevel=info
    
 2. flushall --- Clear all databases of redis: --- in C:\redis ---> run in cmd
 3. flushdb ----- Clear only current DB of redis (default 0): === in C:\redis ----> run in cmd
