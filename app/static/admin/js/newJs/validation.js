@@ -15,7 +15,22 @@ function PageValidate()
     }
 }
 
+function loginValidate()
+{
+    var username = document.getElementById('username');
+    var password = document.getElementById('password');
 
+    if(username.value.trim() == '')
+    {
+        document.getElementById('error_username').innerHTML = 'Please enter username';
+        return false;
+    }
+    if(password.value.trim() == '')
+    {
+        document.getElementById('error_password').innerHTML = "Please enter password";
+        return false;
+    }
+}
 
 
 

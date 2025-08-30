@@ -1,10 +1,13 @@
 # jigsaw/app/celery.py
 from celery import Celery
+import os
 
 celery = Celery(
     "app",
-    broker="redis://localhost:6379/0",        
-    backend="redis://localhost:6379/0",       
+    broker=os.getenv("CELERY_BROKER_URL"),
+    backend=os.getenv("CELERY_RESULT_BACKEND"),
+    # broker="redis://localhost:6379/0",        
+    # backend="redis://localhost:6379/0",       
 )
 
 def init_celery(flask_app):

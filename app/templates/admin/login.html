@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Login</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.0.2/css/bootstrap.min.css">
+    </head>
+    <body>
+     <!--   {% if 'admin_id' in request.session %}
+        <script>
+          var baseUrl = window.location.origin + window.location.pathname.replace(/\/login$/, '/');
+          window.location.href = baseUrl;
+        </script>
+      {% endif %}-->
+        <style>
+    
+            .auth-one-bg-position {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            width: 100%;
+            height: 380px;
+        }
+        
+        .auth-one-bg {
+           background-position: center;
+            background-size: cover;
+            background-image: radial-gradient(rgba(0, 0, 0, 0) 0%, rgb(25 75 255 / 17%) 100%), radial-gradient(rgba(0, 0, 0, 0) 33%, rgb(9 87 255 / 47%) 166%);
+        }
+        
+        #video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        #video-container video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .auth-one-bg .bg-overlay {
+            background: linear-gradient(to right, rgb(99 41 255 / 6%), rgb(120 247 40 / 18%));
+            opacity: 0.9;
+        }
+        
+        .bg-overlay {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            top: 0;
+            opacity: 0.7;
+            background-color: #000;
+        }
+        
+        .auth-one-bg .shape {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .auth-one-bg .shape > svg {
+            width: 100%;
+            height: auto;
+            fill: #ecf0fa;
+        }
+        
+        .particles-js-canvas-el {
+            position: relative;
+        }
+        
+        .auth-page-wrapper .auth-page-content {
+            /*padding-bottom: 60px;*/
+            position: relative;
+            z-index: 2;
+            width: 100%;
+        }
+        
+        .login-bg {
+            background-color: rgb(255 255 255 / 75%);
+            backdrop-filter: saturate(180%) blur(3px);
+            border: 2px solid rgb(0 246 253 / 0%);
+            box-shadow: rgb(0 0 0 / 10%) 0px 10px 15px -3px, rgb(0 0 0 / 5%) 0px 4px 6px -2px;
+        }
+        
+        .card-body {
+            box-shadow: rgb(0 0 0 / 45%) 0px 25px 20px -20px;
+        }
+        
+        .form-label {
+            font-size: 17px;
+            font-family: calibri;
+        }
+        body {
+            background: #ecf0fa !important;
+        }
+        </style>        
+
+        <div class="auth-page-wrapper pt-5">
+            <!-- page bg -->
+            <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
+                <div id="video-container">
+                    <video autoplay="" loop="" muted="">
+                        <source src="{{ url_for('media_files', filename='login_video/back.mp4') }}" type="video/mp4" />
+                    </video>
+                </div>
+        
+                <div class="bg-overlay"></div>
+                <div class="shape">
+                    <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
+                        <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
+                    </svg>
+                </div>
+                <canvas class="particles-js-canvas-el" width="1349" height="380" style="width: 100%; height: 100%;"></canvas>
+            </div>
+        
+            <!-- page content -->
+            <div class="auth-page-content">
+                <form id="loginForm">
+                   
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8 col-lg-6 col-xl-5">
+                            <div class="card mt-5 login-bg">
+                                <div class="card-body p-4">
+                                    <div class="text-center">
+                                        <div class="d-inline-block auth-logo">
+                                            <img src="{{ url_for('media_files', filename='login_video/advtr.svg') }}" alt="JSLPS image" height="80" />
+                                        </div>
+                                        <h3 class="text-dark mt-3">Admin Login</h3>
+                                    </div>
+        
+                                    <div class="p-2 mt-3">
+                                        <div class="mb-3">
+                                            <label for="username" class="form-label">Username</label>
+                                            <input name="username" type="text" id="username" onKeyUp="RemoveV('username')" class="form-control" placeholder="Enter username" />
+                                            <div class="error_cls" id="error_username"></div>
+                                        </div>
+                                        
+                                        <div class="mb-3">
+                                            <label class="form-label" for="password-input">Password</label>
+                                            <div class="position-relative auth-pass-inputgroup mb-3">
+                                            <input name="password" type="password" id="password" onKeyUp="RemoveV('password')" class="form-control pe-5 password-input" placeholder="Enter password" />
+                                            <div class="error_cls" id="error_password"></div>
+                                            </div>
+                                        </div>
+        
+                                        <div class="mt-4">
+                                            <input type="button" onclick="login('loginForm', 'btnlogin', 'admin-login', loginValidate)" name="admin_login" value="Login" id="btnlogin" class="btn btn-primary w-100" />
+                                            <div class="text-center" id="error_msg"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- card body -->
+                            </div>
+                            <!-- card -->
+                        </div>
+                    </div>
+                    <!-- row -->
+                </div>
+                <!-- container -->
+            </form></div>
+            <!-- end page content -->
+        </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>       
+<script src="{{ url_for('admin.static', filename='js/newJs/common.js') }}"></script>       
+<script src="{{ url_for('admin.static', filename='js/newJs/validation.js') }}"></script>
+</body>
+</html>

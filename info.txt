@@ -25,12 +25,21 @@ jigsaw/
     
 
 
+topics
+
+1. methodview
+2. blueprint
+
 
 
 https://www.youtube.com/watch?v=ZCRqwez93R0&list=PLqIb7mt_Xhs4XUSBbxZWGqAYsXWcJ8n2N&index=2 --- techfryday
 
 https://www.youtube.com/watch?v=HZ0lnQER3G4&list=PLjC8JXsSUrri-6NaaN9UUi0_FZB_YrTsL&index=3 ---- for jwt -- tech-gram academy
 https://github.com/TechGram-Academy/REST-APIs-with-Authentication/blob/master/app.py   
+https://www.youtube.com/watch?v=M9n3q_VYtko --- kritim yantra --- Flask Route Protection with Middleware:
+
+https://www.youtube.com/watch?v=oByMm7uC4jo&list=PL19fiuet8c3mCnEmLne9TkNbPRC95-FCe&index=26 --- kritim yantra --- Flask Authentication System: Login Users with SQLAlchemy
+
 
 links
  1. https://www.opentechguides.com/how-to/article/python/210/flask-mysql-crud.html#google_vignette
@@ -75,10 +84,7 @@ https://www.youtube.com/watch?v=ZDe9kQLeKwM  --- SQLAlchemy & Flask-Migrate Setu
 
 redis
 
-1. celery -A app.celery_service worker --loglevel=info --pool=solo   ----- run this command for celery
-celery -A app.celery_service worker --loglevel=info -P solo
-celery -A app.celery_service worker --loglevel=info
-   
+1. celery -A app.celery_service worker --loglevel=info --pool=solo   ----- run this command for celery   
 2. flushall --- Clear all databases of redis: --- in C:\redis ---> run in cmd
 3. flushdb ----- Clear only current DB of redis (default 0): === in C:\redis ----> run in cmd
 

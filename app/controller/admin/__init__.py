@@ -10,9 +10,10 @@ admin_bp = Blueprint(
     static_url_path='/admin/static'     
 )
 
+from . import auth
 from . import dashboard
 from . import faq   
-
+from . import team
 
 
 

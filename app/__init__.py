@@ -39,7 +39,7 @@ app.config.from_mapping(
     task_ignore_result=True,
 ),
 
-    admin="admin"
+    ADMIN="admin"  # lowercase not allowed if want to use in lowercase then Instead of from_mapping, set it directly:
 )
 
 # Initialize Celery
@@ -83,7 +83,17 @@ app.register_blueprint(api_bp)
 REACT_BUILD = os.path.join(root_dir, "front", "build")
 REACT_STATIC = os.path.join(REACT_BUILD, "static")
 REACT_ASSETS = os.path.join(REACT_BUILD, "assets")
+
+# backend 
 ADMIN_STATIC = os.path.join(root_dir, "app", "static", "admin")
+MEDIA_ROOT = os.path.join(root_dir, "app", "media", "uploads")
+MEDIA_URL = "/media"
+
+# uploads
+UPLOAD_FOLDER = MEDIA_ROOT   
+os.makedirs(UPLOAD_FOLDER, exist_ok=True) 
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
 
 @app.route("/static/react/<path:path>")
 def serve_react_static(path):
@@ -96,6 +106,10 @@ def serve_react_assets(path):
 @app.route("/static/admin/<path:filename>")
 def serve_admin_static(filename):
     return send_from_directory(ADMIN_STATIC, filename)
+
+@app.route(f"{MEDIA_URL}/<path:filename>")
+def media_files(filename):
+    return send_from_directory(MEDIA_ROOT, filename)
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
