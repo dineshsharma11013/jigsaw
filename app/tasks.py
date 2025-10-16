@@ -25,3 +25,12 @@ def send_async_email(subject, recipients, body):
         return f"❌ Error sending email: {str(e)}"
     finally:
         logger.info(f"Email task finished for {recipients}")
+
+
+
+
+
+
+
+
+

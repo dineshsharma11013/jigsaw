@@ -15,6 +15,17 @@ function PageValidate()
     }
 }
 
+function TeamValidate()
+{
+    var name = document.getElementById('name');
+
+    if(name.value=='')
+    {
+        document.getElementById('name').innerHTML="Please enter name";
+        return false;
+    }
+}
+
 function loginValidate()
 {
     var username = document.getElementById('username');

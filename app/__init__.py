@@ -92,7 +92,8 @@ MEDIA_URL = "/media"
 # uploads
 UPLOAD_FOLDER = MEDIA_ROOT   
 os.makedirs(UPLOAD_FOLDER, exist_ok=True) 
-app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER.replace('\\','/')
+
 
 
 @app.route("/static/react/<path:path>")

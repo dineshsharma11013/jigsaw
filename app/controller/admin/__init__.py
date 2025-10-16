@@ -7,7 +7,7 @@ admin_bp = Blueprint(
     url_prefix='/admin',
     template_folder='../../templates/admin',
     static_folder='../../static/admin',      
-    static_url_path='/admin/static'     
+    #static_url_path='/admin/static'     
 )
 
 from . import auth

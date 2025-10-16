@@ -242,9 +242,6 @@ function dataNormalSave(fm, btn, pth, mtd) {
     console.log(fm, btn, epath, formData);
     fetch(epath, {
       method: 'POST',
-      headers: {
-        "X-CSRFToken": csrftoken
-      },
       body: formData,
       cache: "no-cache"
     })

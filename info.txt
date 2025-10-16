@@ -17,6 +17,7 @@ jigsaw/
     ├── static/
     │   └── admin/
     │       └── css/
+    ├── media/uploads/team
     ├── tasks.py
     │   
     └── templates/
